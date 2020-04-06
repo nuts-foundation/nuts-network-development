@@ -10,7 +10,7 @@ cp config/*.conf build
 cp cordapps/* build
 
 # now run the bootstrapper
-cd build && java -jar ../bin/corda-tools-network-bootstrapper-4.1.jar --dir . --copy-cordapps Yes
+cd build && java -jar ../bin/corda-tools-network-bootstrapper-4.4.jar --dir . --copy-cordapps Yes
 rm *.log
 cd -
 
