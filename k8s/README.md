@@ -1,12 +1,7 @@
-### Create config and persistent volume
+### Create a nuts service
+
+Go to the folder and apply the kubernetes kustomize configuration by executing the following command:
 
 ```
-kubectl apply -f service-space-volume.yaml --namespace development
-kubectl create configmap service-space-config --from-file=files/nuts.yaml --namespace development
-```
-
-### Install
-
-```
-kubectl apply -f service-space-deployment.yaml --namespace development
+kubectl apply -l . -n development
 ```
