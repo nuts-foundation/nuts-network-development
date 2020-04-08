@@ -1,0 +1,20 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: service-space-ingress
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /auth/irmaclient/*
+        backend:
+          serviceName: service-space-service
+          servicePort: 80
+      - path: /auth/contract/session
+        backend:
+          serviceName: service-space-service
+          servicePort: 80
+      - path: /auth/accesstoken
+        backend:
+          serviceName: service-space-service
+          servicePort: 80

@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: service-space-deployment
+  labels:
+    app: service-space-deployment
+  namespace: development
+spec:
+  selector:
+    matchLabels:
+      app: service-space-deployment
+  template:
+    metadata:
+      labels:
+        app: service-space-deployment
+    spec:
+      containers:
+        - name: nuts-service-space
+          image: nutsfoundation/nuts-service-space:release-0.13.2
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: NUTS_CONFIGFILE
+              value: /opt/nuts/config/nuts.yaml
+          ports:
+            - name: api
+              containerPort: 1323
+            - name: nats
+              containerPort: 4222
+          readinessProbe:
+            httpGet:
+              port: api
+              path: /status
+            initialDelaySeconds: 10
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              port: api
+              path: /status
+          volumeMounts:
+            - name: working-dir-volume
+              mountPath: /opt/nuts/working-dir/sqlite
+              subPath: nuts/cstore
+            - name: working-dir-volume
+              mountPath: /opt/nuts/working-dir/registry
+              subPath: nuts/registry
+            - name: working-dir-volume
+              mountPath: /opt/nuts/working-dir/keys
+              subPath: nuts/crypto
+            - name: working-dir-volume
+              mountPath: /opt/nuts/working-dir/irma
+              subPath: nuts/auth
+            - name: nuts-config
+              mountPath: /opt/nuts/config
+      volumes:
+        - name: working-dir-volume
+          persistentVolumeClaim:
+            claimName: service-space-working-dir
+        - name: nuts-config
+          configMap:
+            name: service-space-config
