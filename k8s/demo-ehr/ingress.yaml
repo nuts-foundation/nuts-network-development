@@ -1,0 +1,14 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: demo-ehr-ingress
+  annotations:
+    kubernetes.io/ingress.global-static-ip-name: nuts-demo-ehr-ip-development
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /*
+        backend:
+          serviceName: demo-ehr-service
+          servicePort: 80

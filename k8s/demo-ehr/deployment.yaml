@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nuts-demo-ehr
+  labels:
+    app: nuts-demo-ehr
+spec:
+  selector:
+    matchLabels:
+      app: nuts-demo-ehr-deployment
+  template:
+    metadata:
+      labels:
+        app: nuts-demo-ehr-deployment
+    spec:
+      containers:
+        - name: nuts-demo-ehr
+          image: nutsfoundation/nuts-demo-ehr:latest-dev
+          imagePullPolicy: IfNotPresent
+          env:
+          - name: REDIS_SERVER_ADDRESS
+            value: redis-demo-ehr-service
+          volumeMounts:
+            - name: demo-ehr-config
+              mountPath: /app/config/
+      volumes:
+        - name: demo-ehr-config
+          configMap:
+            name: organizations-config
