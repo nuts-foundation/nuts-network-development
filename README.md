@@ -2,6 +2,8 @@
 
 Temporary project for bootstrapping the development network
 
+Now deprecated and archived. This was for the Nuts network gen. 1 when we used the Corda network.
+
 ## about
 
 This project helps in generating the needed keys and files for setting up the development network. This project is no longer needed when the https://github.com/nuts-foundation/nuts-discovery service has been extended and is being hosted for the development network.
